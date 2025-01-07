@@ -1,11 +1,10 @@
 package com.example.notificationsMS.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="Notification")
+@Table(name = "Notification")
 public class Notification {
 
     @Id
@@ -58,4 +57,5 @@ public class Notification {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
 }

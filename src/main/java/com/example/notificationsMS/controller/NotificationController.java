@@ -5,7 +5,7 @@ import com.example.notificationsMS.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/notifications")
@@ -18,25 +18,25 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-    // Create Notification
+    // Créer une notification
     @PostMapping
     public Notification createNotification(@RequestBody Notification notification) {
         return notificationService.saveNotification(notification);
     }
 
-    // Read all Notifications
+    // Lire toutes les notifications
     @GetMapping
     public List<Notification> getAllNotifications() {
         return notificationService.getAllNotifications();
     }
 
-    // Read Notification by ID
+    // Lire une notification par ID
     @GetMapping("/{id}")
     public Notification getNotificationById(@PathVariable Long id) {
         return notificationService.findById(id);
     }
 
-    // Update Notification by ID
+    // Mettre à jour une notification par ID
     @PutMapping("/{id}")
     public Notification updateNotification(@PathVariable Long id, @RequestBody Notification updatedNotification) {
         Notification existingNotification = notificationService.findById(id);
@@ -49,19 +49,19 @@ public class NotificationController {
         return null;
     }
 
-    // Delete Notification by ID
+    // Supprimer une notification par ID
     @DeleteMapping("/{id}")
     public String deleteNotification(@PathVariable Long id) {
         boolean isDeleted = notificationService.deleteNotificationById(id);
         return isDeleted ? "Notification deleted successfully!" : "Notification not found!";
     }
 
-    // Send Notification by ID
+    // Envoyer une notification par ID
     @PostMapping("/send/{id}")
     public String sendNotification(@PathVariable Long id) {
         Notification notification = notificationService.findById(id);
         if (notification != null) {
-            notificationService.sendNotification(notification);
+            notificationService.sendNotification(notification.getMessage(), notification.getTitle());
             return "Notification sent successfully!";
         }
         return "Notification not found!";
